@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "ts-node-dev ./src/index.ts",
+    "start": "ts-node-dev ./index.ts",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "devDependencies": {

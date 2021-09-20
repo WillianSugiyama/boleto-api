@@ -1,7 +1,7 @@
-import { BarCodeType } from '../enums/barcodeType';
+import { BarCodeType } from '../enums/barCodeType';
 
-const getBarCodeType = (code: string): BarCodeType => {
-  const cleanBarCode = code.replace(/[^0-9]/g, '');
+const getBarCodeType = (barCode: string): BarCodeType => {
+  const cleanBarCode = barCode.replace(/[^0-9]/g, '');
 
   if (cleanBarCode.length === 44) {
     return BarCodeType.BARCODE;
