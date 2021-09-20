@@ -16,27 +16,26 @@ const validateBarCodeWithValidatioDigit = (barCode: string, barCodeType: BarCode
     boletoType = getBoletoType(cleanBarCode);
 
     if (boletoType === BoletoType.BANK || BoletoType.CREDIT_CARD) {
-      barCodeBlock.push(+cleanBarCode.substr(0, 9), +calcMod10(cleanBarCode.substr(0, 9)));
-      barCodeBlock.push(+cleanBarCode.substr(10, 10), +calcMod10(cleanBarCode.substr(10, 10)));
-      barCodeBlock.push(+cleanBarCode.substr(21, 10), +calcMod10(cleanBarCode.substr(21, 10)));
-      barCodeBlock.push(+cleanBarCode.substr(32, 1));
-      barCodeBlock.push(+cleanBarCode.substr(33));
-
-      result = barCodeBlock.reduce((prev, curr) => prev + curr).toString();
+      barCodeBlock.push(cleanBarCode.substr(0, 9), calcMod10(cleanBarCode.substr(0, 9)));
+      barCodeBlock.push(cleanBarCode.substr(10, 10), calcMod10(cleanBarCode.substr(10, 10)));
+      barCodeBlock.push(cleanBarCode.substr(21, 10), calcMod10(cleanBarCode.substr(21, 10)));
+      barCodeBlock.push(cleanBarCode.substr(32, 1));
+      barCodeBlock.push(cleanBarCode.substr(33));
+      result = barCodeBlock.reduce((prev, curr) => prev + '' + curr).toString();
     } else {
       const getValueOrReference = getReference(cleanBarCode);
 
       if (getValueOrReference?.mod === 10) {
-        barCodeBlock.push(+cleanBarCode.substr(0, 11), +calcMod10(cleanBarCode.substr(0, 11)));
-        barCodeBlock.push(+cleanBarCode.substr(12, 11), +calcMod10(cleanBarCode.substr(12, 11)));
-        barCodeBlock.push(+cleanBarCode.substr(24, 11), +calcMod10(cleanBarCode.substr(24, 11)));
-        barCodeBlock.push(+cleanBarCode.substr(36, 11), +calcMod10(cleanBarCode.substr(36, 11)));
+        barCodeBlock.push(cleanBarCode.substr(0, 11), calcMod10(cleanBarCode.substr(0, 11)));
+        barCodeBlock.push(cleanBarCode.substr(12, 11), calcMod10(cleanBarCode.substr(12, 11)));
+        barCodeBlock.push(cleanBarCode.substr(24, 11), calcMod10(cleanBarCode.substr(24, 11)));
+        barCodeBlock.push(cleanBarCode.substr(36, 11), calcMod10(cleanBarCode.substr(36, 11)));
       } else if (getValueOrReference?.mod === 11) {
         const digitValidators = [];
-        barCodeBlock.push(+cleanBarCode.substr(0, 11));
-        barCodeBlock.push(+cleanBarCode.substr(12, 11));
-        barCodeBlock.push(+cleanBarCode.substr(24, 11));
-        barCodeBlock.push(+cleanBarCode.substr(36, 11));
+        barCodeBlock.push(cleanBarCode.substr(0, 11));
+        barCodeBlock.push(cleanBarCode.substr(12, 11));
+        barCodeBlock.push(cleanBarCode.substr(24, 11));
+        barCodeBlock.push(cleanBarCode.substr(36, 11));
 
         digitValidators.push(parseInt(cleanBarCode.substr(11, 1)));
         digitValidators.push(parseInt(cleanBarCode.substr(23, 1)));
@@ -50,7 +49,7 @@ const validateBarCodeWithValidatioDigit = (barCode: string, barCodeType: BarCode
         return isEqual(barCodeCalculed, digitValidators);
       }
 
-      result = barCodeBlock.reduce((prev, curr) => prev + curr).toString();
+      result = barCodeBlock.reduce((prev, curr) => prev + '' + curr).toString();
     }
   } else if (barCodeType === BarCodeType.BARCODE) {
     boletoType = getBoletoType(cleanBarCode);
